@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link rel="shortcut icon" type="image/jpg" href="images/svgs/poster2.svg"/>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="css/bootstrap.v5.min.css" />
+	<link rel="stylesheet" href="css/index.css" />
+
+	<title>USER INFO: Poster App</title>
+
+	<style>
+		
+		.form-in {
+			width: 100%;
+			max-width: 480px;
+			/*padding: 15px;*/
+			margin: auto;
+		}
+
+		.card {
+			transition: all 0.6s ease;
+		}
+
+        .field-updated {
+            border: 2px solid #009987;
+        }
+
+        input {
+            transition: border 0.4s ease;
+        }
+
+        main {
+            padding-top: 100px;
+        }
+
+	</style>
+
+
+</head>
+
+<body>
+
+	<header>
+		<nav class="navbar navbar-fixed-top fixed-top navbar-expand-lg navbar-dark bg-light shadow">
+  
+			<div class="container d-flex justify-space-between">
+		
+				<!-- Logo & Compay Name [Custom Made] -->
+				<a class="navbar-brand " href="/">
+					<div class="d-flex justify-content-start align-items-center">
+						<img src="images/svgs/poster2.svg" alt="" width="48" height="48">
+						<h3 class="m-2" style="color: black;">POSTER</h3> <!--COmpany Name-->
+					</div>
+				</a>
+		
+				<!-- The Small Screen Navigator -->
+				<button class="navbar-toggler" style="background: #ccc;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+		
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto ms-auto" style="padding-right: 6px;">
+						
+					</ul>
+					<div>
+						<a class="btn btn-danger" title="Logout From APP" href="/logout">
+							LOGOUT
+						</a>
+					</div>
+				</div>  <!-- Nav Links Complete -->
+		
+			</div> <!-- Nav Container Complete -->
+		
+		</nav> <!-- Nav Complete -->
+
+	</header>
+	
+
+	<main class="form-in">
+
+		<div class="pb-2">
+			<div class="alert alert-warning text-${msgType} shadow-sm" role="alert">
+				<div><strong>Alert!</strong> Edit Details With Care</div>
+			</div>
+		</div>
+
+        <div class="pb-2" style="display: flex; align-items: center; justify-content: space-between;">
+            <a href="/home" class="btn btn-secondary">Go Back</a>
+            <a class="btn btn-success edit-info">Edit Info</a>
+        </div>
+        
+		<form class="user-info-form card shadow-sm">
+
+            <fieldset disabled>
+
+                <div class="card-body">
+
+                    <div class="alert-content">
+
+                    </div>
+
+                    <h3>
+                        <center>USER INFO</center>                        
+                    </h3>
+                    
+                    <label for="full_name">Full Name</label>
+                    <input type="name" id="full_name" class="form-control" placeholder="Full Name" disabled>
+                    <br>
+
+                    <label for="user_id">Username</label>
+                    <input type="name" id="user_id" class="form-control" placeholder="Username" disabled>
+                    <br>
+
+                    <label for="user_password">Password</label>
+                    <input type="password" id="user_password" class="form-control" placeholder="*************" disabled> 
+                    <br>
+
+                    <label for="user_email_id">Email ID</label>
+                    <input type="email" id="user_email_id" class="form-control" placeholder="user@email.com">
+                    <br>
+
+                    <div class="row pb-2">
+                        <div class="col">
+                            <label for="user_phone_no_cc">Phone Country Code</label>
+                            <select id="user_phone_no_cc" class="form-select">
+                                <option selected>Choose Country</option>
+                                <option>IN</option>
+                                <option>US</option>
+                                <option>ER</option>
+                                <option>DE</option>
+                                <option>GR</option>
+                                <option>CU</option>
+                                <option>MN</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="user_phone_no">Phone No.</label>
+                            <input type="tel" id="user_phone_no" class="form-control" placeholder="1234567890">
+                        </div>
+                    </div>
+                    <br>
+
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Update Info</button>
+                    <br> <br>
+                    
+                </div>
+
+            </fieldset>
+
+		</form>
+	</main>
+
+
+
+	<footer>
+
+	</footer>
+
+	<script>
+
+        // Example POST method implementation:
+        async function fetchFromServer(url = '', http_method, data) {
+            const response = await fetch(url, {
+                method: http_method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            return response.json();
+        }
+
+        /****
+            { user_id: uuidv4(), full_name: "Ashish R Bhandari", user_name: "ashish", pass_word: "secret", email_id: "aashish.bhandari@gmail.com", phone_no: "7896752097", cc: "IN" } 
+        */
+        function update_form(user_details) {
+            document.querySelector("#full_name").value = user_details.full_name;
+			document.querySelector("#user_id").value = user_details.user_name;
+			document.querySelector("#user_email_id").value = user_details.email_id;
+            document.querySelector("#user_phone_no_cc").value = user_details.cc;
+            document.querySelector("#user_phone_no").value = user_details.phone_no;
+         
+        }
+
+        function fill_user_details() {
+            fetchFromServer('/current_user', "GET")
+            .then(data => {
+                console.log("Fetched Data For [/current_user]", data); // JSON data parsed by `data.json()` call
+                update_form(data);
+            });        
+        }
+
+        document.querySelector(".edit-info").addEventListener("click", function(event) {
+            event.preventDefault();
+            let fieldset = document.querySelector("fieldset");
+            let is_fieldset_disabled_attr = fieldset.hasAttribute("disabled");
+            if (is_fieldset_disabled_attr) {
+                fieldset.removeAttribute("disabled");
+                this.innerText = "Close Info";
+            } else {
+                fieldset.setAttribute("disabled", true);
+                this.innerText = "Edit Info";
+            }
+                
+        });
+
+
+		function showMsg(msgType, msg) {
+			let alert_content = `
+				<div class="alert alert-light text-${msgType} shadow-sm" role="alert">
+					<strong>${msg}</strong>
+					<button type="button" class="btn-close btn-close-${msgType} hide-alert" aria-label="Close"></button>
+				</div>
+			`;
+			document.querySelector(".alert-content").innerHTML = alert_content;
+
+			setTimeout(() => {
+				console.log(document.querySelector(".alert-content .btn-close").parentElement);
+				document.querySelector(".alert-content .btn-close").parentElement.style.opacity = 0;
+			}, 2000);
+
+
+			setTimeout(() => {
+				document.querySelector(".btn-close").parentElement.remove();
+			}, 2400);
+		}
+
+		let user_info_form = document.querySelector(".user-info-form");
+
+		user_info_form.onsubmit = function(event) {
+			
+			event.preventDefault();
+
+            let user_email_id = document.querySelector("#user_email_id");
+            let user_phone_no_cc = document.querySelector("#user_phone_no_cc");
+            let user_phone_no = document.querySelector("#user_phone_no");
+
+			const user_email_id_value = user_email_id.value;
+			const user_phone_no_cc_value = user_phone_no_cc.value;
+			const user_phone_no_value = user_phone_no.value;
+
+			let go_ahead = false;
+
+			// No Validation
+			if (true) {
+				go_ahead = true;
+			} else {
+				showMsg("danger", `<strong>Update Field Error!!</strong> Field Incorrect`);
+			}
+
+			if (go_ahead) {
+				let xhrPostLogin = new XMLHttpRequest();
+				xhrPostLogin.open("POST", "/update_user_details");
+				xhrPostLogin.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                /*** Fields: email_id, phone_no, cc */
+				xhrPostLogin.send(`{ "email_id": "${user_email_id_value}", "phone_no": "${user_phone_no_value}", "cc": "${user_phone_no_cc_value}" }`);
+				
+				xhrPostLogin.onreadystatechange = function() { // Call a function when the state changes. 
+					if (this.readyState === XMLHttpRequest.DONE) {
+						
+						try {
+							const authenticated_response = JSON.parse(xhrPostLogin.responseText);
+							console.log(authenticated_response);
+							if (authenticated_response.success) {
+								showMsg("success", `<strong> SuccessFul!!</strong> ${authenticated_response.details}`);
+                                fill_user_details();
+                                document.querySelector(".edit-info").click();
+							} else {
+								showMsg("danger", `<strong>Registration Error!!</strong> ${authenticated_response.error}`);
+							}
+						} catch (e) {
+							showMsg("danger", `<strong>Update Info Error!!</strong> Exception Caught, Check Console`);
+							console.log(e);
+						}
+
+					}
+				}
+			}
+
+		}
+
+        fill_user_details();
+
+	</script>
+
+</body>
+
+</html>

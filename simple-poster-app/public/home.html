@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link rel="shortcut icon" type="image/jpg" href="images/svgs/poster2.svg"/>
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="css/bootstrap.v5.min.css" />
+	<link rel="stylesheet" href="css/index.css" /> 
+
+	<!-- JS -->
+	<script defer src="js/bootstrap.v5.bundle.min.js"></script>
+	<script defer src="js/index.js"></script>
+
+	 <!-- Fonts: Google Fonts-->
+	 <link rel="preconnect" href="https://fonts.gstatic.com">
+	 <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
+
+	<title>Dashboard: Poster App</title>
+
+</head>
+
+<body>
+	<header>
+
+		<nav class="navbar navbar-fixed-top fixed-top navbar-expand-lg navbar-dark bg-light shadow">
+  
+			<div class="container d-flex justify-space-between">
+		
+				<!-- Logo & Compay Name [Custom Made] -->
+				<a class="navbar-brand " href="/">
+					<div class="d-flex justify-content-start align-items-center">
+						<img src="images/svgs/poster2.svg" alt="" width="48" height="48">
+						<h3 class="m-2" style="color: black;">POSTER</h3> <!--COmpany Name-->
+					</div>
+				</a>
+		
+				<!-- The Small Screen Navigator -->
+				<button class="navbar-toggler" style="background: #ccc;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+		
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto ms-auto" style="padding-right: 6px;">
+						<li class="nav-item pe-2">
+							<a class="btn btn-secondary" id="create-post-nav">Create Post</a>	
+						</li>
+						<li class="nav-item">
+							
+							<a href="/user_info" class="btn btn-primary" id="show-user-info" style="display: flex; justify-content: center; align-items: center; gap: 4px;">
+								<img width="26" height="26" src="/images/svgs/user.png" alt="" style="border: 1px solid #ccc; border-radius: 50%;">
+								<span>User Info</span>
+							</a>
+							
+						</li>
+					</ul>
+					<div>
+						<a class="btn btn-danger" title="Logout From APP" href="/logout">
+							LOGOUT
+						</a>
+					</div>
+				</div>  <!-- Nav Links Complete -->
+		
+			</div> <!-- Nav Container Complete -->
+		
+		</nav> <!-- Nav Complete -->
+
+
+	</header>
+	<main>
+		
+		<div class="main-screen">
+			<div class="container">
+				<div class="main-screen-inner">
+
+					<div class="row">
+						
+						<div class="col-2">
+							
+							<div class="list-group" id="list-tab" role="tablist">
+								<a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#home" role="tab" aria-controls="home">All Posts</a>
+								<a class="list-group-item list-group-item-action" id="list-my-posts-list" data-bs-toggle="list" href="#my-posts" role="tab" aria-controls="profile">My Posts</a>
+								<a class="list-group-item list-group-item-action" id="list-post-now-list" data-bs-toggle="list" href="#post-now" role="tab" aria-controls="messages">Post Now</a>
+							</div>
+
+						</div>
+
+						<div class="col-8">
+
+							<div class="alert-content">
+								
+							</div>
+							
+							<div class="tab-content" id="nav-tabContent">
+								<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="list-home-list">
+									<div class="all-posts-container">
+										
+									</div>
+								</div>
+								<div class="tab-pane fade" id="my-posts" role="tabpanel" aria-labelledby="list-my-posts-list">
+									<div class="my-posts-container">
+										
+									</div>
+								</div>
+								<div class="tab-pane fade" id="post-now" role="tabpanel" aria-labelledby="list-post-now-list">
+									<div class="post-now-container">
+										
+
+										<div class="card shadow-sm">
+											<div class="card-header">
+												<h5 class="card-title">Create a New Post Now</h5>
+											</div>
+											<div class="card-body">
+												<div class="input-group mb-3">
+													<span class="input-group-text" id="input_post_name">Post Name</span>
+													<input class="input_post_name form-control" type="text" placeholder="Post Name" aria-label="Username" aria-describedby="input_post_name">
+												</div>
+								
+												<div class="input-group mb-3">
+													<span class="input-group-text" id="input_post_desc">Post Description</span>
+													<textarea class="form-control input_post_desc" placeholder="Post Description" aria-label="With textarea"></textarea>
+												</div>
+								
+											</div>
+											<div class="card-footer">
+												<a href="#" class="btn btn-success create-this-post">POST</a>
+												<a href="#" class="btn btn-secondary clear-these-fields">CLEAR</a>
+											</div>
+										</div>
+
+
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="col-2">
+							
+							<div class="all-user-list list-group">
+								<a class="list-group-item">@ajay</a>
+								<a class="list-group-item">@sammy</a>
+								<a class="list-group-item">@lorem</a>
+								<a class="list-group-item">@haryy</a>
+								<a class="list-group-item">@rohni</a>
+								<a class="list-group-item">@aslwe</a>
+								<a class="list-group-item">@jkus</a>
+								<a class="list-group-item">@kjhui</a>
+							</div>
+							
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</main>
+	<footer>
+
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link rel="shortcut icon" type="image/jpg" href="images/svgs/poster2.svg"/>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="css/bootstrap.v5.min.css" />
+	<link rel="stylesheet" href="css/index.css" />
+
+	<title>Login: Poster App</title>
+
+	<style>
+		body {
+			display: flex;
+			align-items: center;
+			padding-top: 40px;
+			padding-bottom: 40px;
+			/*background-color: #f5f5f5;*/
+		}
+
+
+		.form-signin {
+			width: 100%;
+			max-width: 480px;
+			/*padding: 15px;*/
+			margin: auto;
+		}
+
+		main {
+			padding-top: 0!important;
+		}
+
+		.card {
+			transition: all 0.6s ease;
+		}
+
+	</style>
+
+
+</head>
+
+<body>
+	<header>
+
+	</header>
+	
+
+	<main class="form-signin">
+		<form class="login-form card shadow-sm">
+			<div class="card-body">
+				
+				<div class="alert-content">
+
+				</div>
+
+				<div style="display: flex; justify-content: center; align-items: center;">
+					<img class="mb-4" src="images/svgs/poster2.svg" alt="" width="76" height="76">
+					<h1 class="h3 mb-3 fw-normal">Login To <span class="badge bg-secondary">POSTER</span> </h1>
+				</div>
+				
+				<label for="user_id" class="visually-hidden">Username</label>
+				<input type="name" id="user_id" class="form-control" placeholder="Username" required="" autofocus="">
+				<br>
+
+				<label for="user_password" class="visually-hidden">Password</label>
+				<input type="password" id="user_password" class="form-control" placeholder="Password" required="">
+				<br>
+
+				<button class="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>
+
+				<br> <br>
+				<a href="/register" class="w-100 btn btn-lg btn-outline-dark" type="submit">Not a Registered User, Please Register Here </a>
+			</div>
+
+		</form>
+	</main>
+
+
+
+	<footer>
+
+	</footer>
+
+	<script>
+
+
+		function showMsg(msgType, msg) {
+
+			let alert_content = `
+				<div class="alert alert-light text-${msgType} shadow-sm" role="alert">
+					<strong>${msg}</strong>
+					<button type="button" class="btn-close btn-close-${msgType} hide-alert" aria-label="Close"></button>
+				</div>
+			`;
+			document.querySelector(".alert-content").innerHTML = alert_content;
+
+			setTimeout(() => {
+				console.log(document.querySelector(".alert-content .btn-close").parentElement);
+				document.querySelector(".alert-content .btn-close").parentElement.style.opacity = 0;
+			}, 2000);
+
+
+			setTimeout(() => {
+				document.querySelector(".btn-close").parentElement.remove();
+			}, 2400);
+		}
+
+		let login_form = document.querySelector(".login-form");
+
+		login_form.onsubmit = function(event) {
+			
+			event.preventDefault();
+			
+			let user_id = document.querySelector("#user_id");
+			let user_password = document.querySelector("#user_password");
+
+			const username = user_id.value;
+			const passwd = user_password.value;
+
+			let xhrPostLogin = new XMLHttpRequest();
+			xhrPostLogin.open("POST", "/authenticate");
+			xhrPostLogin.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			xhrPostLogin.send(`{ "user_name": "${username}", "pass_word": "${passwd}" }`);
+			
+			xhrPostLogin.onreadystatechange = function() { // Call a function when the state changes. 
+				if (this.readyState === XMLHttpRequest.DONE) {
+					
+					try {
+						const authenticated_response = JSON.parse(xhrPostLogin.responseText);
+						console.log(authenticated_response);
+						if (authenticated_response.success) {
+							let login_form = document.querySelector(".login-form").innerHTML;
+							showMsg("success", "<strong>Login SuccessFul!!</strong> Redirecting to Dashboard.");
+							setTimeout(() => {
+								window.location.href = "/home";
+							}, 1000);
+						} else {
+							showMsg("danger", `<strong>Login Error!!</strong> ${authenticated_response.error}`);
+						}
+					} catch (e) {
+						showMsg("danger", `<strong>Login Error!!</strong> Exception Caught, Check Console`);
+						console.log(e);
+					}
+					
+					
+				}
+			}
+
+		}
+
+		
+
+	</script>
+
+</body>
+
+</html>
